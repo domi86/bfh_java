@@ -1,6 +1,6 @@
 package tetris.model;
 
-import tetris.gui.ActionEvent;
+import tetris.gui.ActionHandler;
 import tetris.gui.GUI;
 
 public class Game {
@@ -15,63 +15,72 @@ public class Game {
 		figure = createFigure();
 		gui.clear();
 		gui.drawBlocks(figure.getBlocks());
-
-		while (true) {
-			ActionEvent e = gui.waitEvent();
-			handleEvent(e);
-			updateGui();
-		}
+		gui.setActionHandler(new FigureController());
 	}
 
 	private Figure createFigure() {
 		int i = (int) (7 * Math.random());
+		int px = gui.getFieldWidth() / 2 - 1;
+		int py = gui.getFieldHeight() - 1;
 		switch (i) {
 		case 0:
-			return new IFigure();
+			return new IFigure(px, py);
 		case 1:
-			return new JFigure();
+			return new JFigure(px, py);
 		case 2:
-			return new LFigure();
+			return new LFigure(px, py);
 		case 3:
-			return new OFigure();
+			return new OFigure(px, py);
 		case 4:
-			return new SFigure();
+			return new SFigure(px, py);
 		case 5:
-			return new TFigure();
+			return new TFigure(px, py);
 		case 6:
-			return new ZFigure();
+			return new ZFigure(px, py);
 		default:
-			return new IFigure();
+			return new IFigure(px, py);
 		}
 	}
 
-	public void handleEvent(ActionEvent e) {
-		switch (e) {
-		case DROP:
-			break;
-		case MOVE_DOWN:
-			figure.move(0, -1);
-			break;
-		case MOVE_LEFT:
-			figure.move(-1, 0);
-			break;
-		case MOVE_RIGHT:
-			figure.move(1, 0);
-			break;
-		case ROTATE_LEFT:
-			figure.rotate(-1);
-			break;
-		case ROTATE_RIGHT:
-			figure.rotate(1);
-			break;
-		default:
-			break;
-		}
-
-	}
-
-	public void updateGui() {
+	private void updateGui() {
 		gui.clear();
 		gui.drawBlocks(figure.getBlocks());
+	}
+
+	class FigureController implements ActionHandler {
+		@Override
+		public void rotateRight() throws Exception {
+			figure.rotate(1);
+			updateGui();
+		}
+
+		@Override
+		public void rotateLeft() throws Exception {
+			figure.rotate(-1);
+			updateGui();
+		}
+
+		@Override
+		public void moveRight() throws Exception {
+			figure.move(1, 0);
+			updateGui();
+		}
+
+		@Override
+		public void moveLeft() throws Exception {
+			figure.move(-1, 0);
+			updateGui();
+		}
+
+		@Override
+		public void moveDown() throws Exception {
+			figure.move(0, -1);
+			updateGui();
+		}
+
+		@Override
+		public void drop() throws Exception {
+			// TODO Auto-generated method stub
+		}
 	}
 }

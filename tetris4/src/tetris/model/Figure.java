@@ -37,6 +37,13 @@ class IFigure extends Figure {
 		blocks[2] = new Block(3, 19, col);
 		blocks[3] = new Block(4, 19, col);
 	}
+
+	public IFigure(int px, int py) {
+		blocks[0] = new Block(px, py, col);
+		blocks[1] = new Block(px - 1, py, col);
+		blocks[2] = new Block(px + 1, py, col);
+		blocks[3] = new Block(px + 2, py, col);
+	}
 }
 
 class JFigure extends Figure {
@@ -47,6 +54,13 @@ class JFigure extends Figure {
 		blocks[1] = new Block(2, 17, col);
 		blocks[2] = new Block(3, 18, col);
 		blocks[3] = new Block(3, 19, col);
+	}
+
+	public JFigure(int px, int py) {
+		blocks[0] = new Block(px, py - 2, col);
+		blocks[1] = new Block(px - 1, py - 2, col);
+		blocks[2] = new Block(px, py - 1, col);
+		blocks[3] = new Block(px, py, col);
 	}
 }
 
@@ -59,6 +73,13 @@ class LFigure extends Figure {
 		blocks[2] = new Block(3, 18, col);
 		blocks[3] = new Block(3, 19, col);
 	}
+
+	public LFigure(int px, int py) {
+		blocks[0] = new Block(px, py - 2, col);
+		blocks[1] = new Block(px + 1, py - 2, col);
+		blocks[2] = new Block(px, py - 1, col);
+		blocks[3] = new Block(px, py, col);
+	}
 }
 
 class OFigure extends Figure {
@@ -69,6 +90,13 @@ class OFigure extends Figure {
 		blocks[1] = new Block(3, 18, col);
 		blocks[2] = new Block(4, 19, col);
 		blocks[3] = new Block(4, 18, col);
+	}
+
+	public OFigure(int px, int py) {
+		blocks[0] = new Block(px, py, col);
+		blocks[1] = new Block(px, py - 1, col);
+		blocks[2] = new Block(px + 1, py, col);
+		blocks[3] = new Block(px + 1, py - 1, col);
 	}
 
 	@Override
@@ -86,6 +114,13 @@ class SFigure extends Figure {
 		blocks[2] = new Block(3, 18, col);
 		blocks[3] = new Block(2, 18, col);
 	}
+
+	public SFigure(int px, int py) {
+		blocks[0] = new Block(px, py, col);
+		blocks[1] = new Block(px + 1, py, col);
+		blocks[2] = new Block(px, py - 1, col);
+		blocks[3] = new Block(px - 1, py - 1, col);
+	}
 }
 
 class TFigure extends Figure {
@@ -97,15 +132,29 @@ class TFigure extends Figure {
 		blocks[2] = new Block(4, 19, col);
 		blocks[3] = new Block(3, 18, col);
 	}
+
+	public TFigure(int px, int py) {
+		blocks[0] = new Block(px, py, col);
+		blocks[1] = new Block(px - 1, py, col);
+		blocks[2] = new Block(px + 1, py, col);
+		blocks[3] = new Block(px, py - 1, col);
+	}
 }
 
 class ZFigure extends Figure {
 	private static final int col = 7;
 
 	public ZFigure() {
-		blocks[0] = new Block(3, 19, col);
-		blocks[1] = new Block(4, 19, col);
+		blocks[0] = new Block(4, 19, col);
+		blocks[1] = new Block(3, 19, col);
 		blocks[2] = new Block(4, 18, col);
 		blocks[3] = new Block(5, 18, col);
+	}
+
+	public ZFigure(int px, int py) {
+		blocks[0] = new Block(px, py, col);
+		blocks[1] = new Block(px - 1, py, col);
+		blocks[2] = new Block(px, py - 1, col);
+		blocks[3] = new Block(px + 1, py - 1, col);
 	}
 }
