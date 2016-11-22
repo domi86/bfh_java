@@ -47,7 +47,7 @@ public class Game {
 		gui.drawBlocks(figure.getBlocks());
 	}
 
-	class FigureController implements ActionHandler {
+	private class FigureController implements ActionHandler {
 		@Override
 		public void rotateRight() throws Exception {
 			figure.rotate(1);
