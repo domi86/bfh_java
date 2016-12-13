@@ -10,7 +10,7 @@ import java.io.IOException;
 public class Scoring {
 	private static final int rowsNeededForNextLevel = 10;
 	private int level, score, highScore, rowCounter;
-	private final String highScorePersPath = "data/highScore.txt";
+	private final String highScoreFilePath = "data/highScore.moo";
 
 	public Scoring() {
 		level = 1;
@@ -37,7 +37,7 @@ public class Scoring {
 			break;
 		}
 		rowCounter += rowCount;
-		if(rowCounter >= rowsNeededForNextLevel) {
+		if (rowCounter >= rowsNeededForNextLevel) {
 			level++;
 			rowCounter %= rowsNeededForNextLevel;
 		}
@@ -58,14 +58,15 @@ public class Scoring {
 	}
 
 	public void reset() {
-		score = highScore = 0;
 		saveHighScore();
-
+		score = 0;
+		highScore = 0;
 	}
 
 	public void loadHighScore() {
-		try (DataInputStream dis = new DataInputStream(new FileInputStream(highScorePersPath))) {
+		try (DataInputStream dis = new DataInputStream(new FileInputStream(highScoreFilePath))) {
 			highScore = dis.readInt();
+			System.out.println(java.time.Instant.now().toString() + ": Highscore geladen (" + highScore + ")");
 		} catch (IOException e) {
 			System.out.println(java.time.Instant.now().toString() + ": " + e.getMessage());
 		}
@@ -73,19 +74,19 @@ public class Scoring {
 
 	public void saveHighScore() {
 		try {
-			File highScoreFile = new File(highScorePersPath);
+			File highScoreFile = new File(highScoreFilePath);
 			File parentDir = new File(highScoreFile.getParent());
-			if(!parentDir.exists())
+			if (!parentDir.exists())
 				parentDir.mkdir();
-			if(!highScoreFile.exists())
+			if (!highScoreFile.exists())
 				highScoreFile.createNewFile();
 		} catch (IOException e) {
 			System.out.println(java.time.Instant.now().toString() + ": " + e.getMessage());
 		} finally {
 		}
-		try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(highScorePersPath));) {
+		try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(highScoreFilePath));) {
 			dos.writeInt(highScore);
-//			dos.flush();
+			System.out.println(java.time.Instant.now().toString() + ": Highscore gespeichert (" + highScore + ")");
 		} catch (IOException e) {
 			System.out.println(java.time.Instant.now().toString() + ": " + e.getMessage());
 		}
