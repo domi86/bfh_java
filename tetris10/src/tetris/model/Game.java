@@ -91,74 +91,50 @@ public class Game {
 
 	}
 
+	private boolean execute(Movement m1, Movement m2) {
+		m1.make(figure);
+		try {
+			field.detectCollision(figure.getBlocks());
+			updateGui();
+			return true;
+		} catch (CollisionException e) {
+			m2.make(figure);
+			return false;
+		}
+	}
+
 	private class FigureController implements ActionHandler, Runnable {
 		@Override
 		public void rotateRight() {
-			figure.rotate(1);
-			try {
-				field.detectCollision(figure.getBlocks());
-			} catch (CollisionException e) {
-				figure.rotate(-1);
-			}
-			updateGui();
+			execute(f -> f.rotate(1), f -> f.rotate(-1));
 		}
 
 		@Override
 		public void rotateLeft() {
-			figure.rotate(-1);
-			try {
-				field.detectCollision(figure.getBlocks());
-			} catch (CollisionException e) {
-				figure.rotate(1);
-			}
-			updateGui();
+			execute(f -> f.rotate(-1), f -> f.rotate(1));
 		}
 
 		@Override
 		public void moveRight() {
-			figure.move(1, 0);
-			try {
-				field.detectCollision(figure.getBlocks());
-			} catch (CollisionException e) {
-				figure.move(-1, 0);
-			}
-			updateGui();
+			execute(f -> f.move(1, 0), f -> f.move(-1, 0));
 		}
 
 		@Override
 		public void moveLeft() {
-			figure.move(-1, 0);
-			try {
-				field.detectCollision(figure.getBlocks());
-			} catch (CollisionException e) {
-				figure.move(1, 0);
-			}
-			updateGui();
+			execute(f -> f.move(-1, 0), f -> f.move(1, 0));
 		}
 
 		@Override
 		public void moveDown() {
-			figure.move(0, -1);
-			try {
-				field.detectCollision(figure.getBlocks());
-				updateGui();
-			} catch (CollisionException e) {
-				figure.move(0, 1);
+			if (!execute(f -> f.move(0, -1), f -> f.move(0, 1)))
 				figureLanded();
-			}
 		}
 
 		@Override
 		public void drop() throws Exception {
-			try {
-				while (true) {
-					figure.move(0, -1);
-					field.detectCollision(figure.getBlocks());
-				}
-			} catch (CollisionException e) {
-				figure.move(0, 1);
+			while(execute(f -> f.move(0,-1), f-> f.move(0,1))){
+				//moo
 			}
-			updateGui();
 		}
 
 		@Override
